@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import Header from '../common/components/Header';
 import ProductRoutes from '../features/products/productRoutes';
 import CartRoutes from '../features/cart/cartRoutes';
 
@@ -12,6 +14,8 @@ const AppWrapper = styled.div`
 function App() {
   return (
     <AppWrapper>
+      <ToastContainer />
+      <Header />
       <Routes>
         <Route path="/" element={<Navigate to='/home' />} />
         <Route path="/home/*" element={<ProductRoutes />} />
