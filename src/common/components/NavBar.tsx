@@ -15,13 +15,14 @@ const HeaderWrapper = styled.nav`
 
 `;
 const SearchWrapper = styled.form`
+    --border-radius: 5px;
     margin: 0 0 0 10px;
     display: flex;
     flex-direction: row;
     .search-container {
       margin: 0 0 0 5px;
       border: 1px solid gray;
-      border-radius: 5px;
+      border-radius: var(--border-radius);
       display: flex;
       flex-direction: row;
       height: 100%;
@@ -32,8 +33,8 @@ const SearchWrapper = styled.form`
         height: 100%;
         margin: 0;
         border: none;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
+        border-top-right-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
         background-color: #898C91;
         color: white;
       }
@@ -41,8 +42,8 @@ const SearchWrapper = styled.form`
         height: 100%;
         width: 50px;
         border: none;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+        border-top-left-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
         background-color: #FCFCFC;
         border-right: solid 1px gray;
       }
@@ -53,17 +54,23 @@ const SearchWrapper = styled.form`
 const NavLinksWrapper = styled.div`
   height: 100%;
   display: flex;
-  a {
-    text-decoration: none;
-    color: black;
-  }
-  a:hover {
-    text-decoration: underline;
-    color: dodgerblue;
-  }
   .cart-link {
     display: flex;
-    color: white;
+    text-decoration: none;
+    color: black;
+    position: relative;
+    .cart-link-text {
+      align-self: flex-end;
+    }
+    .cart-link-text:hover {
+      color: dodgerblue;
+      text-decoration: underline;
+    }
+    .cart-count {
+      position: absolute;
+      top: -10px;
+      left: 15px;
+    }
   }
 `;
 export default function NavBar() {
@@ -83,7 +90,7 @@ export default function NavBar() {
     <HeaderWrapper>
       <SearchWrapper onSubmit={searchItems}>
         <label htmlFor='search'>
-          <span>Search Products</span>
+          <strong>Search</strong>
         </label>
         <div className="search-container">
           <select>
@@ -103,18 +110,22 @@ export default function NavBar() {
                 placeholder="Ex: Mens Casual Fit"
               onChange={(e) => setSearchVal(e.target.value)}
             />
-          <button type='submit'>Go</button>
+          <button type='submit' className="px-2">Go</button>
         </div>
       </SearchWrapper>
       <NavLinksWrapper>
-        <div className="cart-link">
-          <Link to="/cart">
-            <AiOutlineShoppingCart />
+          <Link to="/cart" className="cart-link ml-3">
+            <AiOutlineShoppingCart size={30} />
+            <span className="cart-link-text">Cart</span>
+            <div className="cart-count bg-red-500 px-2 rounded-full text-white">
+            {cart.length > 0 && (
+              <>
+                {cart.reduce(
+                (prev, curr) => prev + curr.count, 0
+                )}
+              </>)}
+            </div>
           </Link>
-          {cart.length > 0 && <div>{cart.reduce(
-            (prev, curr) => prev + curr.count, 0
-          )}</div>}
-        </div>
       </NavLinksWrapper>
     </HeaderWrapper>
   )
