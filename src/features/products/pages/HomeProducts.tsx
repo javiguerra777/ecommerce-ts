@@ -15,13 +15,17 @@ const ProductsWrapper = styled.div`
 `;
 const ProductWrapper = styled.div`
 border: solid 1px lightgray;
-width: 300px;
+flex: 1 1 300px;
 .image {
   width: 100%;
   height: 300px;
 }
 .product-link {
   text-decoration: none;
+  color: dodgerblue;
+}
+.product-link:hover {
+  text-decoration: underline;
 }
 `;
 export default function HomeProducts() {
